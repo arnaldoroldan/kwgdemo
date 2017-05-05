@@ -1,5 +1,5 @@
 # kwgdemo
-Kaazing WebSocket Gateway docker image configured to run as a remote gateway connect to the Kaazing hosted onpremise gateway.
+Docker image for the Kaazing WebSocket Gateway configured to run as a `remote` gateway connecting to a Kaazing hosted `onpremise` gateway.
 
 ## Requirements
 Docker version 17 or newer
