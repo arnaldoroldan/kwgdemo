@@ -44,7 +44,7 @@
     <connect-options>
       <pipe.transport>socks://${onprem.gateway}:${ssl.port}</pipe.transport>
       <http.transport>socks://${onprem.gateway}:${ssl.port}</http.transport>
-      <socks.transport>wsn://${onprem.gateway}:${ssl.port}/proxy</socks.transport>
+      <socks.transport>wsn+ssl://${onprem.gateway}:${ssl.port}/proxy</socks.transport>
       <socks.mode>forward</socks.mode>
       <ws.inactivity.timeout>55 seconds</ws.inactivity.timeout>
     </connect-options>
@@ -66,7 +66,7 @@
   <connect-options>
     <pipe.transport>socks://${onprem.gateway}:${ssl.port}</pipe.transport>
     <http.transport>socks://${onprem.gateway}:${ssl.port}</http.transport>
-    <socks.transport>wsn://${onprem.gateway}:${ssl.port}/proxy</socks.transport>
+    <socks.transport>wsn+ssl://${onprem.gateway}:${ssl.port}/proxy</socks.transport>
     <socks.mode>forward</socks.mode>
     <socks.timeout>2 seconds</socks.timeout>
     <ws.inactivity.timeout>55 seconds</ws.inactivity.timeout>
