@@ -3,6 +3,7 @@ Docker image for the Kaazing WebSocket Gateway configured to run as a `remote` g
 
 ## Requirements
 Docker version 17 or newer
+iperf (not iperf3)
 
 ## Building The Demo
 
@@ -15,6 +16,14 @@ To build the docker image run:
 To run the demo:
 
 `run --rm --name remotegw -p 8000:8000 -p 5001:5001 kwgdemo`
+
+To test the `echo` service:
+
+`telnet localhost 8000`
+
+To test the `iperf` service:
+
+'iperf -c localhost -p 5001`
 
 To run the demo using a different set of host ports (say ports 8080 & 5050):
 
