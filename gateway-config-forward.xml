@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+    Copyright 2007-2016, Kaazing Corporation. All rights reserved.
+
+-->
+<gateway-config xmlns="http://xmlns.kaazing.org/2016/06/gateway">
+
+<properties>
+
+  <property>
+    <name>onprem.gateway</name>
+    <value>52.15.199.21</value>
+  </property>
+
+  <property>
+    <name>ssl.port</name>
+    <value>443</value>
+  </property>
+
+  <property>
+    <name>echo.port</name>
+    <value>8000</value>
+  </property>
+
+  <property>
+    <name>iperf.port</name>
+    <value>5001</value>
+  </property>
+
+</properties>
+
+  <service>
+    <name>Echo Proxy</name>
+    <accept>tcp://@eth0:${echo.port}</accept>
+    <connect>pipe://echo-proxy</connect>
+
+    <type>proxy</type>
+
+  <properties>
+    <prepared.connection.count>1</prepared.connection.count>
+  </properties>
+
+    <connect-options>
+      <pipe.transport>socks://${onprem.gateway}:${ssl.port}</pipe.transport>
+      <http.transport>socks://${onprem.gateway}:${ssl.port}</http.transport>
+      <socks.transport>wsn://${onprem.gateway}:${ssl.port}/proxy</socks.transport>
+      <socks.mode>forward</socks.mode>
+      <ws.inactivity.timeout>55 seconds</ws.inactivity.timeout>
+    </connect-options>
+
+  </service>
+
+<service>
+
+  <name>Iperf Service Proxy</name>
+  <accept>tcp://@eth0:${iperf.port}</accept>
+  <connect>pipe://iperf-proxy</connect>
+
+  <type>proxy</type>
+
+  <properties>
+    <prepared.connection.count>1</prepared.connection.count>
+  </properties>
+
+  <connect-options>
+    <pipe.transport>socks://${onprem.gateway}:${ssl.port}</pipe.transport>
+    <http.transport>socks://${onprem.gateway}:${ssl.port}</http.transport>
+    <socks.transport>wsn://${onprem.gateway}:${ssl.port}/proxy</socks.transport>
+    <socks.mode>forward</socks.mode>
+    <socks.timeout>2 seconds</socks.timeout>
+    <ws.inactivity.timeout>55 seconds</ws.inactivity.timeout>
+  </connect-options>
+
+  <cross-site-constraint>
+    <allow-origin>*</allow-origin>
+  </cross-site-constraint>
+
+</service>
+
+<!--
+#############################################################################
+############### End of Services #############################################
+#############################################################################
+-->
+
+  <security>
+
+    <keystore>
+      <type>JCEKS</type>
+      <file>keystore.db</file>
+      <password-file>keystore.pw</password-file>
+    </keystore>
+
+    <truststore>
+      <file>truststore.db</file>
+    </truststore>
+
+    <realm>
+      <name>demo</name>
+      <description>Sample realm for file-based authentication</description>
+
+      <user-principal-class>org.kaazing.gateway.security.auth.config.UserConfig</user-principal-class>
+
+      <authentication>
+        <http-challenge-scheme>Application Basic</http-challenge-scheme>
+        <login-modules>
+          <login-module>
+            <type>file</type>
+            <success>required</success>
+            <options>
+              <file>jaas-config.xml</file>
+            </options>
+          </login-module>
+        </login-modules>
+      </authentication>
+    </realm>
+
+  </security>
+
+</gateway-config>
