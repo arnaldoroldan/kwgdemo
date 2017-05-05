@@ -17,11 +17,11 @@ To run the demo:
 
 `run --rm --name remotegw -p 8000:8000 -p 5001:5001 kwgdemo`
 
-To test the `echo` service:
+To test the `echo` service run the following on the host system:
 
 `telnet localhost 8000`
 
-To test the `iperf` service:
+To test the `iperf` service run the following on the host system:
 
 'iperf -c localhost -p 5001`
 
